@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h3{
+            text-align: center;
+        }
+        input{
+            text-align:center;
+            height: 25px;
+            
+    
+        }
+        body{
+            background-image:url("https://as1.ftcdn.net/jpg/01/85/66/14/1000_F_185661497_zPjAueyhzl2ErxdE37VKDFNOuZN6ukyj.jpg");
+            background-size: cover;
+            background-position:center;
+            background-repeat:no-repeat;
+           min-height: 100vh;
+        }
+        input::placeholder{
+            color: rgba(178, 69, 69, 0.728);
+             color: rgb(174, 100, 100);
+        }
+        button{
+            color:rgb(165, 89, 99);
+        }
+        audio{
+            display: none;
+        }
+        #greeting {
+            font-size: 48px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .orange {
+            color: rgb(237, 16, 27);
+        }
+        .white {
+            color: white;
+        }
+        .green {
+            color: green;
+        }
+        html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+center{
+    width:100%;
+}
+
+    </style>
+      </head>
+<body>
+    <center>
+        
+        <br><br><br>👇<br><br>
+    <input type="search" id="name"placeholder="Enter Your Name"><br><br>
+     <button onclick="submitForm()">Submit</button>
+    <br><br>
+    <div id="greeting"></div>
+    <audio id="audio"loop preload="auto">
+        <source src="audio.mp3" type="audio/mpeg"/>
+    </audio>
+    </center>
+<script>
+function submitForm() {
+    const name = document.getElementById('name').value.trim();
+    if (name === '') {
+        alert('Please enter your name!');
+        return;
+    }
+
+    const greeting = document.getElementById('greeting');
+    greeting.innerHTML = '';
+
+    const words = [
+        { text: 'Happy ', className: 'orange' },
+        { text: 'Independence ', className: 'white' },
+        { text: 'Day ', className: 'green' },
+        { text: `${name} 🎉`, className: '' }
+    ];
+
+    let wordIndex = 0;
+    let charIndex = 0;
+
+    function typeWord() {
+        if (wordIndex >= words.length) return;
+
+        const currentWord = words[wordIndex];
+        if (charIndex === 0) {
+            const span = document.createElement('span');
+            if (currentWord.className) span.classList.add(currentWord.className);
+            greeting.appendChild(span);
+        }
+
+        const span = greeting.lastChild;
+        span.textContent = currentWord.text.substring(0, charIndex + 1);
+        charIndex++;
+
+        if (charIndex < currentWord.text.length) {
+            setTimeout(typeWord, 100);
+        } else {
+            wordIndex++;
+            charIndex = 0;
+            setTimeout(typeWord, 200);
+        }
+    }
+
+    typeWord();
+
+    const audio = document.getElementById('audio');
+
+    // Unmute and load audio before play (important for mobile)
+    audio.muted = false;
+    audio.load();
+
+    // Play audio and handle any errors
+    audio.play().catch(error => {
+        console.log("Audio playback error:", error);
+    });
+}
+
+
+    </script>
+</body>
+</html>
